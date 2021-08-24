@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Todo, fetchTodos } from '../actions';
 import { StoreState } from '../reducers';
@@ -8,8 +8,21 @@ interface AppProps {
   fetchTodos(): any;
 }
 
-const _App: React.FC<AppProps> = (): JSX.Element => {
-  return <div>Hi there!</div>;
+const _App: React.FC<AppProps> = (props: AppProps): JSX.Element => {
+  const onButtonClick = (): void => {
+    props.fetchTodos();
+  };
+  const renderList = (): JSX.Element[] => {
+    return props.todos.map((todo: Todo) => {
+      return <li key={todo.id}>{todo.title}</li>;
+    });
+  };
+  return <div>
+    <button onClick={onButtonClick}>Fetch</button>
+    <ul>
+      {renderList()}
+    </ul>
+  </div>;
 };
 
 const mapStateToProps = (state: StoreState): { todos: Todo[] } => {
