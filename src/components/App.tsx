@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Todo, fetchTodos, deleteTodo } from '../actions';
 import { StoreState } from '../reducers';
@@ -9,9 +9,17 @@ interface AppProps {
   deleteTodo(id: number): any;
 }
 
+
 const _App: React.FC<AppProps> = (props: AppProps): JSX.Element => {
+  const [fetching, setFetching] = useState(false);
+
+  useEffect(() => {
+    
+  }, [props.todos])
+
   const onButtonClick = (): void => {
     props.fetchTodos();
+    setFetching(true);
   };
   const onTodoClick = (id: number): void => {
     props.deleteTodo(id);
